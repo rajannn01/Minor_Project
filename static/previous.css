@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    background: url('mood.png') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    text-align: center;
+}
+
+.logo {
+    padding-left: 20px;
+    float: left;
+    color: white;
+    font-size: 35px;
+    font-weight: bold;
+    margin: 0;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 32px;
+}
+
+/* Navbar */
+/* .navbar {
+    background-color: #333;
+    padding: 40px;
+    text-align: center;
+} */
+
+/* Mood Sections */
+.mood-section {
+    width: 90%;
+    margin: 20px auto;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mood-title {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    color: white;
+    border-radius: 5px;
+}
+/* Color coding for different moods */
+/* .happy { background-color: #4CAF50; }  
+.sad { background-color: #2196F3; } 
+.angry { background-color: #FF5722; }  */
+
+/* Book List */
+.book-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.book-item {
+    background: #130202;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.book-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.book-item strong {
+    display: block;
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.book-item p {
+    font-size: 16px;
+    color: #555;
+}
+
+ 

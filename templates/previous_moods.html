@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previous Moods and Ratings</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='previous.css') }}">
+</head>
+
+<body>
+
+    <div class="navbar">
+        <h2 class="logo">Inspired to Learn</h2>
+    </div>
+
+    <h1><br>Previous Moods and Ratings</h1>
+       <!-- Iterate over moods  -->
+    {% for item in previous_recommendations %}
+    <div
+        class="mood-section {% if item.mood == 'happy' %}happy{% elif item.mood == 'sad' %}sad{% elif item.mood == 'angry' %}angry{% endif %}">
+        <h2 class="mood-title">{{ item.mood|capitalize }}</h2>
+        <div class="book-list">
+            <!-- Iterate over books recommended under this mood -->
+            {% for book in item.books %}
+            <div class="book-item">
+                <img src="{{ book.image_url }}" alt="{{ book.title }}">
+                <strong>{{ book.title }}</strong>
+                {% if book.rating %}
+                <p>Rating: {{ book.rating }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+
+
+</body>
+
+</html>
