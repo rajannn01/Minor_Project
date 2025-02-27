@@ -74,6 +74,7 @@ button {
 }
 
 button:hover {
+    transform: scale(1.2);
     background: darkred;
 }
 
@@ -82,22 +83,47 @@ button:hover {
     margin: 20px auto;
     max-width: 600px;
     padding: 20px;
-    background: none; /* Remove background */
+    background: none; 
     border-radius: 10px;
 }
 
-.book-item {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 8px;
+.book-list {
+    display: flex;
+    justify-content: center; /* Center align the book items */
+    gap: 20px; /* Add space between books */
+    flex-wrap: nowrap; /* Prevent wrapping to a new row */
 }
 
-.book-item img {
-    width: 100px;
+.book-item {
+    width: 200px; /* Set fixed width */
+    flex: 0 0 auto; /* Prevent shrinking */
+}
+
+
+.book-item {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    width: 200px; 
+}
+
+
+/* .book-item img {
+    width: 150px; 
     height: auto;
     margin-bottom: 10px;
+} */
+
+.book-title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 5px; 
 }
+
 .rating button {
     background: #333;
     margin: 2px;
@@ -107,17 +133,7 @@ button:hover {
 }
 
 .rating button.selected {
-    background: gold;
-    color: black;
+    background: red !important; 
+    color: white;
 }
 
-@media (max-width: 768px) {
-    nav ul {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    h1 {
-        font-size: 2rem;
-    }
-}

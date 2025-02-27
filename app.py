@@ -7,6 +7,7 @@ import cv2
 import mediapipe as mp
 import random  # Importing the random module
 from bson import ObjectId
+import base64
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -38,6 +39,8 @@ previously_recommended_books = []
 def capture_emotion_once():
     global emotion
     cap = cv2.VideoCapture(0)
+    captured_frame = None  # To store the captured frame
+    encoded_image = None  # To store the encoded image
 
     while True:
         _, frm = cap.read()
@@ -70,12 +73,19 @@ def capture_emotion_once():
 
             lst = np.array(lst).reshape(1, -1)
             pred = label[np.argmax(model.predict(lst))]
-
             emotion = pred.lower()
             print("Detected emotion:", emotion)
-            break
+
+            # Store the captured frame
+            captured_frame = frm.copy()  # Ensure a copy to avoid modification issues
+
+            # Convert the frame to base64 for displaying in HTML
+            _, buffer = cv2.imencode('.jpg', captured_frame)
+            encoded_image = base64.b64encode(buffer).decode('utf-8')
+            break  # exit loop after capturing one image
 
     cap.release()
+    return emotion, encoded_image
 
 def get_books_from_db(emotion, exclude_books=None):
     collection = db[emotion]
@@ -87,8 +97,8 @@ def get_books_from_db(emotion, exclude_books=None):
         filtered_books = books
 
     # Select 2 random books from the list
-    if len(filtered_books) > 2:
-        return random.sample(filtered_books, 2)  # Get 2 random books
+    if len(filtered_books) > 3:
+        return random.sample(filtered_books, 3)  # Get 2 random books
     elif len(filtered_books) > 0:
         return filtered_books  # If there are less than 2 books, return all of them
     else:
@@ -146,7 +156,7 @@ def capture_emotion():
         return redirect(url_for('login'))
 
     username = session['username']
-    capture_emotion_once()  # Capture emotion once when requested
+    emotion, encoded_image = capture_emotion_once()  # Capture emotion once when requested
 
     # Save user's mood into the database
     user_moods_collection.insert_one({"username": username, "emotion": emotion})
@@ -163,8 +173,12 @@ def capture_emotion():
 
     previously_recommended_books.extend([book['title'] for book in recommended_books])
 
-    # Return emotion and recommended books as a JSON response
-    return jsonify({"emotion": emotion.capitalize(), "recommended_books": recommended_books})
+    # Return emotion and recommended books as a JSON response, including the image
+    return jsonify({
+        "emotion": emotion.capitalize(),
+        "recommended_books": recommended_books,
+        "captured_image": encoded_image  # Pass the encoded image
+    })
 
 @app.route('/re_recommend', methods=['POST'])
 def re_recommend():
@@ -214,21 +228,50 @@ def submit_rating():
 
     return jsonify({"message": "Rating submitted successfully"})
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
 @app.route('/previous_moods')
 def previous_moods():
     if 'username' not in session:
         return redirect(url_for('login'))
 
     username = session['username']
-    previous_recommendations = list(previous_recommendations_collection.find({"username": username}, {"_id": 1}))
-    previous_recommendations_with_details = []
 
-    for item in previous_recommendations:
-        details = previous_recommendations_collection.find_one({"_id": item["_id"]})
-        details["_id"] = str(details["_id"])
-        previous_recommendations_with_details.append(details)
+    # Fetch all mood entries for the user
+    mood_entries = list(user_moods_collection.find({"username": username}))
 
-    return render_template('previous_moods.html', previous_recommendations=previous_recommendations_with_details)
+    # Calculate mood percentages
+    mood_counts = {}
+    for entry in mood_entries:
+        mood = entry['emotion']
+        mood_counts[mood] = mood_counts.get(mood, 0) + 1
+
+    total_moods = len(mood_entries)
+    mood_percentages = {mood: (count / total_moods) * 100 for mood, count in mood_counts.items()}
+
+    # Determine dominant mood
+    dominant_mood = max(mood_percentages, key=mood_percentages.get) if mood_percentages else None
+
+    # Fetch all recommended books for the user
+    all_books = []
+    recommendations = list(previous_recommendations_collection.find({"username": username}))
+    for rec in recommendations:
+        if rec["books"]:
+            all_books.extend(rec["books"])
+
+    return render_template(
+        'previous_moods.html',
+        mood_percentages=mood_percentages,
+        all_books=all_books,
+        username=username,  # Pass the username to the template
+        dominant_mood=dominant_mood
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
