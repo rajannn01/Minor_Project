@@ -56,6 +56,15 @@
                     document.getElementById('emotion-output').innerText = "Your emotion is: " + data.emotion; 
                     const bookList = document.getElementById('book-list'); 
                     bookList.innerHTML = ''; 
+                    // Show Captured Frame
+                    const capturedImageContainer = document.getElementById("capturedImageContainer");
+                    const capturedImage = document.getElementById("capturedImage");
+
+                    if (data.captured_image) {
+                        capturedImage.src = "data:image/jpeg;base64," + data.captured_image;
+                        capturedImage.style.display = "block";  
+                        capturedImageContainer.style.display = "block";  
+                    }
 
                     if (data.recommended_books.length > 0) { 
                         // Display recommended books

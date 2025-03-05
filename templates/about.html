@@ -7,8 +7,13 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='about.css') }}">
 </head>
 <body>
-        <div class="logo">Inspired to Learn</div>
+    <header>
+        <nav>
+            <div class="logo">Inspired to Learn</div>
+            <a href="{{ url_for('index') }}" class="back-button">⬅ Back to Home</a>  </nav>
+        </nav>
     </header>
+    
     <div class="about-container">
         <h1>About Us</h1>
         <p>Welcome to <strong>Mood-Based Book Recommendation System</strong>, an AI-powered platform designed to enhance your reading experience by recommending books that align with your emotions.</p>

@@ -174,13 +174,32 @@
                 margin-top: 1rem;
             }
         }
+        
+        .back-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    background-color: red;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: darkred;
+}
+
     </style>
 </head>
 <body>
     <header class="header">
         <h1>Inspired to Learn</h1>
         <nav class="nav-links">
-            <a href="#">Back to Home</a>
+            <a href="{{ url_for('index') }}" class="back-button">⬅ Back to Home</a>  </nav>
         </nav>
     </header>
 
@@ -196,8 +215,8 @@
                 <div class="contact-item">
                     <i class="fas fa-map-marker-alt"></i>
                     <div>
-                        <h4>Office</h4>
-                        <p>1520 Luna Road<br>Carrollton, TX 75006<br>United States</p>
+                        <h4>College</h4>
+                        <p>Chakupat,Lalitpur,Nepal</p>
                     </div>
                 </div>
 
@@ -205,7 +224,7 @@
                     <i class="fas fa-envelope"></i>
                     <div>
                         <h4>Email us</h4>
-                        <p>help@collegeproject.com</p>
+                        <p>inspiredtolearn@gmail.com</p>
                     </div>
                 </div>
 
@@ -213,7 +232,7 @@
                     <i class="fas fa-phone"></i>
                     <div>
                         <h4>Phone</h4>
-                        <p>682-651-7554</p>
+                        <p>01-6638115</p>
                     </div>
                 </div>
             </div>

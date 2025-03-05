@@ -8,24 +8,17 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.js -->
 </head>
 <body>
-    <div class="navbar">
-        <h2 class="logo">Inspired to Learn</h2>
-    </div>
+    <header>
+        <div class="navbar">
+            <h2 class="logo">Inspired to Learn</h2>
+        </div>
+        <nav>
+          <!-- Back to Home Button -->
+        <a href="{{ url_for('index') }}" class="back-button">⬅ Back to Home</a>  </nav>
+        
+    </header>
 
-    <!-- Back to Home Button -->
-    <a href="{{ url_for('index') }}" class="back-button">⬅ Back to Home</a>  
-
-    <h1><br>Previous Moods and Ratings</h1>
-
-    <!-- Book List Section -->
-    <div class="book-list">
-        <h2>All Recommended Books:</h2>
-        <ul>
-            {% for book in all_books %}
-                <li class="book-item">{{ book.title }}</li>
-            {% endfor %}
-        </ul>
-    </div>
+    <h1><br><br>Previous Moods and Ratings</h1>
 
     <!-- Mood Percentages Section (Now Below Book List) -->
     <div class="mood-percentages">
@@ -38,6 +31,18 @@
             <p>{{ username }} is mostly {{ dominant_mood }}.</p>
         {% endif %}
     </div>
+
+    <!-- Book List Section -->
+    <div class="book-list">
+        <h2>All Recommended Books:</h2>
+        <ul>
+            {% for book in all_books %}
+                <li class="book-item">{{ book.title }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    
 
     <!-- JavaScript for Pie Chart -->
     <script>

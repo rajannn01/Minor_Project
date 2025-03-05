@@ -111,13 +111,6 @@ button:hover {
     width: 200px; 
 }
 
-
-/* .book-item img {
-    width: 150px; 
-    height: auto;
-    margin-bottom: 10px;
-} */
-
 .book-title {
     font-weight: bold;
     font-size: 18px;
@@ -137,3 +130,21 @@ button:hover {
     color: white;
 }
 
+
+#capturedImageContainer {
+    text-align: center;
+    margin: 20px auto;
+    padding: 5px;
+    border: 1px solid #ddd;
+    background: transparent;
+    border-radius: 8px;
+    display: none; /* Initially hidden */
+    width: fit-content;
+}
+
+#capturedImage {
+    width: 280px; /* Adjust as needed */
+    height: auto;
+    margin-top: 12px;
+    border-radius: 10px;
+}

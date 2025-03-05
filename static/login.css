@@ -142,7 +142,6 @@ ul li a:hover{
     height: 40px;
     background: red;
     font-family: sans-serif;
-    text-align: center;
     border: none;
     margin-bottom: 10px;
     margin-left: 20px;
@@ -152,6 +151,7 @@ ul li a:hover{
     transition: .4s ease;
     
 }
+
 
 .content .cn a{
     text-decoration: none;
@@ -268,3 +268,9 @@ ul li a:hover{
     color:red;
 }
 
+.error {
+    font-family: 'Arial', sans-serif;
+    font-size: 14px; 
+    color: white;  
+    
+}
